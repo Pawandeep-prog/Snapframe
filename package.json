@@ -15,7 +15,7 @@
     "html-to-image": "^1.11.13",
     "idb-keyval": "^6.2.2",
     "jszip": "^3.10.1",
-    "lucide-react": "^1.8.0",
+    "lucide-react": "^1.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "tailwindcss": "^4.2.2",
