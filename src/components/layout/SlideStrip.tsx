@@ -14,7 +14,7 @@ export function SlideStrip() {
   const scale = STRIP_WIDTH / resolution.width;
 
   return (
-    <aside className="w-24 flex-shrink-0 bg-[#0a0a14] border-l border-white/6 flex flex-col items-center py-4 gap-3 overflow-y-auto">
+    <aside className="w-24 flex-shrink-0 bg-[var(--app-bg)] border-l border-[var(--border-subtle)] flex flex-col items-center py-4 gap-3 overflow-y-auto">
       {slides.map((slide, idx) => {
         const isActive = (activeSlideId === slide.id) || (!activeSlideId && idx === 0);
         return (
@@ -34,8 +34,8 @@ export function SlideStrip() {
               showFrame={true}
             />
             {/* Slide number badge */}
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#0a0a14] border border-white/15 flex items-center justify-center">
-              <span className="text-[8px] text-white/50">{idx + 1}</span>
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[var(--app-bg)] border border-[var(--border-lighter)] flex items-center justify-center">
+              <span className="text-[8px] text-[var(--text-tertiary)]">{idx + 1}</span>
             </div>
           </button>
         );

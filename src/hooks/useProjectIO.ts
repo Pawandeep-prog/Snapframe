@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { useProjectStore } from '../store/useProjectStore';
 import type { ProjectFile } from '../types';
 
 export function useProjectIO() {
+  const { t } = useTranslation();
   const { importProject, exportProject, meta } = useProjectStore();
 
   function saveProject(): void {
@@ -29,7 +31,7 @@ export function useProjectIO() {
           const json = JSON.parse(ev.target?.result as string) as ProjectFile;
           importProject(json);
         } catch {
-          alert('Invalid project file.');
+          alert(t('Invalid project file.'));
         }
       };
       reader.readAsText(file);

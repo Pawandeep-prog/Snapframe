@@ -66,14 +66,14 @@ export function Canvas() {
     <div
       ref={containerRef}
       className="flex-1 flex flex-col items-center justify-center overflow-hidden relative"
-      style={{ background: 'radial-gradient(ellipse at center, #111128 0%, #080810 70%)' }}
+      style={{ background: 'radial-gradient(ellipse at center, var(--canvas-start) 0%, var(--canvas-end) 70%)' }}
     >
       {/* Subtle grid */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+            'linear-gradient(var(--grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }}
       />
@@ -83,19 +83,19 @@ export function Canvas() {
         <button
           onClick={goPrev}
           disabled={activeIndex === 0}
-          className="w-7 h-7 rounded-full bg-white/8 flex items-center justify-center disabled:opacity-20 hover:bg-white/15 transition-colors cursor-pointer disabled:cursor-not-allowed"
+          className="w-7 h-7 rounded-full bg-[var(--fill-hover)] flex items-center justify-center disabled:opacity-20 hover:bg-[var(--fill-medium)] transition-colors cursor-pointer disabled:cursor-not-allowed"
         >
-          <ChevronLeft className="w-4 h-4 text-white" />
+          <ChevronLeft className="w-4 h-4 text-[var(--text-primary)]" />
         </button>
-        <span className="text-xs text-white/40 font-medium">
+        <span className="text-xs text-[var(--text-muted)] font-medium">
           {activeIndex + 1} / {slides.length}
         </span>
         <button
           onClick={goNext}
           disabled={activeIndex === slides.length - 1}
-          className="w-7 h-7 rounded-full bg-white/8 flex items-center justify-center disabled:opacity-20 hover:bg-white/15 transition-colors cursor-pointer disabled:cursor-not-allowed"
+          className="w-7 h-7 rounded-full bg-[var(--fill-hover)] flex items-center justify-center disabled:opacity-20 hover:bg-[var(--fill-medium)] transition-colors cursor-pointer disabled:cursor-not-allowed"
         >
-          <ChevronRight className="w-4 h-4 text-white" />
+          <ChevronRight className="w-4 h-4 text-[var(--text-primary)]" />
         </button>
       </div>
 
@@ -119,7 +119,7 @@ export function Canvas() {
             {N > 1 && (
               <span
                 className="text-[10px] font-medium font-mono"
-                style={{ color: 'rgba(255,255,255,0.28)' }}
+                style={{ color: 'var(--text-muted)' }}
               >
                 {res.label}
               </span>
@@ -130,7 +130,7 @@ export function Canvas() {
 
       {/* Single-resolution size label at bottom */}
       {N === 1 && (
-        <div className="absolute bottom-4 text-xs text-white/20 font-mono">
+        <div className="absolute bottom-4 text-xs text-[var(--text-faint)] font-mono">
           {resolutions[0].width} × {resolutions[0].height}px
         </div>
       )}

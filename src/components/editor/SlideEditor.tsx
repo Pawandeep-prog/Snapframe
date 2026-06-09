@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useProjectStore } from '../../store/useProjectStore';
 import { extractPaletteFromDataUrl } from '../../lib/colorExtractor';
 import { Input } from '../ui/Input';
@@ -11,6 +12,7 @@ interface SlideEditorProps {
 }
 
 export function SlideEditor({ slide }: SlideEditorProps) {
+  const { t } = useTranslation();
   const { updateSlide, removeSlide, slides, selectedResolutions, activeResolutionScope } =
     useProjectStore();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -86,32 +88,32 @@ export function SlideEditor({ slide }: SlideEditorProps) {
 
       {/* ═══════════ SCREENSHOT UPLOAD ═══════════ */}
       <div>
-        <p className="text-xs text-white/45 font-semibold uppercase tracking-wider mb-2">Screenshot</p>
+        <p className="text-xs text-[var(--text-muted)] font-semibold uppercase tracking-wider mb-2">{t('Screenshot')}</p>
         <div
           onClick={() => fileRef.current?.click()}
           className={`relative rounded-2xl overflow-hidden cursor-pointer border-2 transition-all ${
             slide.imageDataUrl
-              ? 'border-white/10 hover:border-white/20'
-              : 'border-dashed border-white/20 hover:border-violet-500/50'
+              ? 'border-[var(--border-light)] hover:border-[var(--border-lighter)]'
+              : 'border-dashed border-[var(--border-lighter)] hover:border-violet-500/50'
           }`}
           style={{ height: 160, aspectRatio: '9/19.5' }}
         >
           {slide.imageDataUrl ? (
             <>
               <img src={slide.imageDataUrl} alt="" className="w-full h-full object-cover object-top" />
-              <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+              <div className="absolute inset-0 bg-[var(--overlay-bg)] opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                 <Upload className="w-5 h-5 text-white" />
-                <span className="text-sm text-white font-medium">Replace</span>
+                <span className="text-sm text-white font-medium">{t('Replace')}</span>
               </div>
             </>
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-white/8 flex items-center justify-center">
-                <Image className="w-6 h-6 text-white/40" />
+              <div className="w-12 h-12 rounded-2xl bg-[var(--fill-hover)] flex items-center justify-center">
+                <Image className="w-6 h-6 text-[var(--text-muted)]" />
               </div>
               <div className="text-center">
-                <p className="text-sm text-white/50">Click to upload</p>
-                <p className="text-xs text-white/25 mt-1">PNG · JPG · WebP</p>
+                <p className="text-sm text-[var(--text-secondary)]">{t('Click to upload')}</p>
+                <p className="text-xs text-[var(--text-faint)] mt-1">{t('PNG · JPG · WebP')}</p>
               </div>
             </div>
           )}
@@ -127,14 +129,14 @@ export function SlideEditor({ slide }: SlideEditorProps) {
               <div className="flex items-center justify-between mb-1.5">
                 <div className="flex items-center gap-1.5">
                   <Tablet className="w-3.5 h-3.5 text-violet-400" />
-                  <p className="text-[11px] text-white/50 font-medium">iPad Screenshot</p>
+                  <p className="text-[11px] text-[var(--text-secondary)] font-medium">{t('iPad Screenshot')}</p>
                 </div>
                 {slide.deviceImages?.['ipad'] && (
                   <button
                     onClick={() => clearDeviceImage('ipad')}
-                    className="text-[10px] text-white/30 hover:text-white/60 cursor-pointer transition-colors"
+                    className="text-[10px] text-[var(--text-muted)] hover:text-[var(--text-tertiary)] cursor-pointer transition-colors"
                   >
-                    Clear
+                    {t('Clear')}
                   </button>
                 )}
               </div>
@@ -142,23 +144,23 @@ export function SlideEditor({ slide }: SlideEditorProps) {
                 onClick={() => iPadFileRef.current?.click()}
                 className={`relative rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${
                   slide.deviceImages?.['ipad']
-                    ? 'border-white/10 hover:border-white/20'
-                    : 'border-dashed border-white/15 hover:border-violet-500/40'
+                    ? 'border-[var(--border-light)] hover:border-[var(--border-lighter)]'
+                    : 'border-dashed border-[var(--border-lighter)] hover:border-violet-500/40'
                 }`}
                 style={{ aspectRatio: '3/4', height: 100 }}
               >
                 {slide.deviceImages?.['ipad'] ? (
                   <>
                     <img src={slide.deviceImages['ipad']} alt="" className="w-full h-full object-cover object-top" />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+                    <div className="absolute inset-0 bg-[var(--overlay-bg)] opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
                       <Upload className="w-4 h-4 text-white" />
                       <span className="text-xs text-white font-medium">Replace</span>
                     </div>
                   </>
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
-                    <Image className="w-5 h-5 text-white/25" />
-                    <p className="text-[10px] text-white/35">Upload iPad screenshot</p>
+                    <Image className="w-5 h-5 text-[var(--text-faint)]" />
+                    <p className="text-[10px] text-[var(--text-muted)]">{t('Upload iPad screenshot')}</p>
                   </div>
                 )}
               </div>
@@ -171,14 +173,14 @@ export function SlideEditor({ slide }: SlideEditorProps) {
               <div className="flex items-center justify-between mb-1.5">
                 <div className="flex items-center gap-1.5">
                   <Tablet className="w-3.5 h-3.5 text-green-400" />
-                  <p className="text-[11px] text-white/50 font-medium">Android Tablet Screenshot</p>
+                  <p className="text-[11px] text-[var(--text-secondary)] font-medium">{t('Android Tablet Screenshot')}</p>
                 </div>
                 {slide.deviceImages?.['android-tablet'] && (
                   <button
                     onClick={() => clearDeviceImage('android-tablet')}
-                    className="text-[10px] text-white/30 hover:text-white/60 cursor-pointer transition-colors"
+                    className="text-[10px] text-[var(--text-muted)] hover:text-[var(--text-tertiary)] cursor-pointer transition-colors"
                   >
-                    Clear
+                    {t('Clear')}
                   </button>
                 )}
               </div>
@@ -186,23 +188,23 @@ export function SlideEditor({ slide }: SlideEditorProps) {
                 onClick={() => tabletFileRef.current?.click()}
                 className={`relative rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${
                   slide.deviceImages?.['android-tablet']
-                    ? 'border-white/10 hover:border-white/20'
-                    : 'border-dashed border-white/15 hover:border-green-500/40'
+                    ? 'border-[var(--border-light)] hover:border-[var(--border-lighter)]'
+                    : 'border-dashed border-[var(--border-lighter)] hover:border-green-500/40'
                 }`}
                 style={{ aspectRatio: '10/16', height: 100 }}
               >
-                {slide.deviceImages?.['android-tablet'] ? (
+                {                  slide.deviceImages?.['android-tablet'] ? (
                   <>
                     <img src={slide.deviceImages['android-tablet']} alt="" className="w-full h-full object-cover object-top" />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
+                    <div className="absolute inset-0 bg-[var(--overlay-bg)] opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5">
                       <Upload className="w-4 h-4 text-white" />
-                      <span className="text-xs text-white font-medium">Replace</span>
+                      <span className="text-xs text-white font-medium">{t('Replace')}</span>
                     </div>
                   </>
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
-                    <Image className="w-5 h-5 text-white/25" />
-                    <p className="text-[10px] text-white/35">Upload tablet screenshot</p>
+                    <Image className="w-5 h-5 text-[var(--text-faint)]" />
+                    <p className="text-[10px] text-[var(--text-muted)]">{t('Upload tablet screenshot')}</p>
                   </div>
                 )}
               </div>
@@ -215,11 +217,11 @@ export function SlideEditor({ slide }: SlideEditorProps) {
 
       {/* ═══════════ TEXT CONTENT ═══════════ */}
       <div className="flex flex-col gap-3">
-        <p className="text-xs text-white/45 font-semibold uppercase tracking-wider">Text Content</p>
+        <p className="text-xs text-[var(--text-muted)] font-semibold uppercase tracking-wider">{t('Text Content')}</p>
 
         <Input
           id={`eyebrow-${slide.id}`}
-          label="Eyebrow (small text above headline)"
+          label={t('Eyebrow (small text above headline)')}
           value={slide.eyebrow}
           onChange={(e) => updateSlide(slide.id, { eyebrow: e.target.value })}
           placeholder="Your PDF. Your Device."
@@ -228,7 +230,7 @@ export function SlideEditor({ slide }: SlideEditorProps) {
 
         <Input
           id={`header-${slide.id}`}
-          label="Headline"
+          label={t('Headline')}
           value={slide.header}
           onChange={(e) => updateSlide(slide.id, { header: e.target.value })}
           placeholder="Edit. Offline. Private."
@@ -236,45 +238,45 @@ export function SlideEditor({ slide }: SlideEditorProps) {
         />
 
         <div className="flex flex-col gap-1">
-          <label className="text-[11px] text-white/50 font-medium">
-            Feature bullets <span className="text-white/25">(1 per line, max 3)</span>
+          <label className="text-[11px] text-[var(--text-secondary)] font-medium">
+            {t('Feature bullets')} <span className="text-[var(--text-faint)]">({t('1 per line, max 3')})</span>
           </label>
           <textarea
             value={slide.featureBullets}
             onChange={(e) => updateSlide(slide.id, { featureBullets: e.target.value })}
             placeholder={"Fast & offline\nNo account needed\nPrivate by default"}
             rows={3}
-            className="bg-white/6 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-violet-500/60 resize-none transition-colors font-mono"
+            className="bg-[var(--fill-raised)] border border-[var(--border-light)] rounded-xl px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-faint)] focus:outline-none focus:border-violet-500/60 resize-none transition-colors font-mono"
           />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="text-[11px] text-white/50 font-medium">
-            Bottom badges <span className="text-white/25">(comma separated, max 5)</span>
+          <label className="text-[11px] text-[var(--text-secondary)] font-medium">
+            {t('Bottom badges')} <span className="text-[var(--text-faint)]">({t('comma separated, max 5')})</span>
           </label>
           <input
             value={slide.badges}
             onChange={(e) => updateSlide(slide.id, { badges: e.target.value })}
             placeholder="100% Offline, No Login, No Subscription"
-            className="bg-white/6 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder:text-white/25 focus:outline-none focus:border-violet-500/60 transition-colors"
+            className="bg-[var(--fill-raised)] border border-[var(--border-light)] rounded-xl px-3 py-2 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-faint)] focus:outline-none focus:border-violet-500/60 transition-colors"
           />
         </div>
       </div>
 
       {/* ═══════════ DISPLAY OPTIONS ═══════════ */}
       <div className="flex flex-col gap-3">
-        <p className="text-xs text-white/45 font-semibold uppercase tracking-wider">Display Options</p>
+        <p className="text-xs text-[var(--text-muted)] font-semibold uppercase tracking-wider">{t('Display Options')}</p>
 
         {/* Device frame toggle */}
         <div className="flex items-center justify-between py-0.5">
           <div className="flex items-center gap-2">
-            <Smartphone className="w-4 h-4 text-white/40" />
-            <span className="text-[11px] text-white/50">Device frame</span>
+            <Smartphone className="w-4 h-4 text-[var(--text-muted)]" />
+            <span className="text-[11px] text-[var(--text-secondary)]">{t('Device frame')}</span>
           </div>
           <button
             onClick={() => updateSlide(slide.id, { deviceFrame: !slide.deviceFrame })}
             className={`relative w-10 h-6 rounded-full transition-colors cursor-pointer flex-shrink-0 ${
-              slide.deviceFrame ? 'bg-violet-600' : 'bg-white/15'
+              slide.deviceFrame ? 'bg-violet-600' : 'bg-[var(--fill-medium)]'
             }`}
           >
             <div className={`absolute top-[3px] w-[18px] h-[18px] rounded-full bg-white shadow transition-all ${
@@ -286,8 +288,8 @@ export function SlideEditor({ slide }: SlideEditorProps) {
         {/* Font size — global + per-element fine-tune */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] text-white/50">Global Font Scale</span>
-            <span className="text-[10px] text-white/35 font-mono">{Math.round((editingSlide.fontScale ?? 1.0) * 100)}%</span>
+            <span className="text-[11px] text-[var(--text-secondary)]">{t('Global Font Scale')}</span>
+            <span className="text-[10px] text-[var(--text-muted)] font-mono">{Math.round((editingSlide.fontScale ?? 1.0) * 100)}%</span>
           </div>
           <input
             type="range"
@@ -303,20 +305,20 @@ export function SlideEditor({ slide }: SlideEditorProps) {
           <details className="group">
             <summary className="text-[10px] text-violet-400 hover:text-violet-300 cursor-pointer select-none flex items-center gap-1 mt-1">
               <span className="group-open:rotate-90 transition-transform inline-block text-[8px]">▶</span>
-              Fine-tune individual sizes
+              {t('Fine-tune individual sizes')}
             </summary>
-            <div className="flex flex-col gap-2 mt-2 pl-1 border-l-2 border-white/6">
+            <div className="flex flex-col gap-2 mt-2 pl-1 border-l-2 border-[var(--border-subtle)]">
               {([
-                { key: 'eyebrowScale', label: 'Eyebrow' },
-                { key: 'headlineScale', label: 'Headline' },
-                { key: 'sublineScale', label: 'Subheadline / Bullets' },
-                { key: 'pillScale', label: 'Floating Pills' },
-                { key: 'badgeScale', label: 'Bottom Badges' },
+                { key: 'eyebrowScale', label: t('Eyebrow') },
+                { key: 'headlineScale', label: t('Headline') },
+                { key: 'sublineScale', label: t('Subheadline / Bullets') },
+                { key: 'pillScale', label: t('Floating Pills') },
+                { key: 'badgeScale', label: t('Bottom Badges') },
               ] as const).map(({ key, label }) => (
                 <div key={key} className="flex flex-col gap-0.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-white/40">{label}</span>
-                    <span className="text-[9px] text-white/30 font-mono">
+                    <span className="text-[10px] text-[var(--text-muted)]">{label}</span>
+                    <span className="text-[9px] text-[var(--text-muted)] font-mono">
                       {Math.round(((editingSlide as any)[key] ?? 1.0) * 100)}%
                     </span>
                   </div>
@@ -339,9 +341,9 @@ export function SlideEditor({ slide }: SlideEditorProps) {
                   pillScale: 1.0,
                   badgeScale: 1.0,
                 })}
-                className="text-[10px] text-white/30 hover:text-white/50 cursor-pointer transition-colors self-start mt-0.5"
+                className="text-[10px] text-[var(--text-muted)] hover:text-[var(--text-muted)] cursor-pointer transition-colors self-start mt-0.5"
               >
-                Reset fine-tuning
+                {t('Reset fine-tuning')}
               </button>
             </div>
           </details>
@@ -353,16 +355,16 @@ export function SlideEditor({ slide }: SlideEditorProps) {
                 delete nextOverrides[activeResolutionScope];
                 updateSlide(slide.id, { resolutionOverrides: nextOverrides });
               }}
-              className="text-[10px] text-white/35 hover:text-white/60 cursor-pointer transition-colors mt-2 self-start border border-white/10 px-2 py-1 rounded-md"
+              className="text-[10px] text-[var(--text-muted)] hover:text-[var(--text-tertiary)] cursor-pointer transition-colors mt-2 self-start border border-[var(--border-light)] px-2 py-1 rounded-md"
             >
-              Clear screen typography override
+              {t('Clear screen typography override')}
             </button>
           )}
         </div>
 
         {/* Pill mode toggle */}
         <div>
-          <span className="text-[11px] text-white/50 mb-1 block">Feature bullets display</span>
+          <span className="text-[11px] text-[var(--text-secondary)] mb-1 block">{t('Feature bullets display')}</span>
           <div className="flex gap-1">
             {(['pills', 'subheadline'] as const).map((mode) => (
               <button
@@ -371,10 +373,10 @@ export function SlideEditor({ slide }: SlideEditorProps) {
                 className={`flex-1 py-1.5 text-xs rounded-lg transition-colors cursor-pointer ${
                   (slide.pillMode ?? 'pills') === mode
                     ? 'bg-violet-600 text-white'
-                    : 'bg-white/8 text-white/60 hover:bg-white/12'
+                    : 'bg-[var(--fill-hover)] text-[var(--text-tertiary)] hover:bg-[var(--fill-medium)]'
                 }`}
               >
-                {mode === 'pills' ? 'Floating Pills' : 'Subheadline'}
+                {mode === 'pills' ? t('Floating Pills') : t('Subheadline')}
               </button>
             ))}
           </div>
@@ -382,19 +384,19 @@ export function SlideEditor({ slide }: SlideEditorProps) {
 
         {/* Override background */}
         <div className="flex items-center justify-between py-0.5">
-          <span className="text-[11px] text-white/50">Override background</span>
+          <span className="text-[11px] text-[var(--text-secondary)]">{t('Override background')}</span>
           <div className="flex items-center gap-2">
             {slide.overrideBackground && (
               <button onClick={() => updateSlide(slide.id, { overrideBackground: null })}
-                className="text-xs text-white/35 hover:text-white/60 cursor-pointer">
-                Clear
+                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-tertiary)] cursor-pointer">
+                {t('Clear')}
               </button>
             )}
             <input
               type="color"
               value={slide.overrideBackground ?? '#6c63ff'}
               onChange={(e) => updateSlide(slide.id, { overrideBackground: e.target.value })}
-              className="w-8 h-8 rounded-lg cursor-pointer border border-white/10 bg-transparent"
+              className="w-8 h-8 rounded-lg cursor-pointer border border-[var(--border-light)] bg-transparent"
             />
           </div>
         </div>
@@ -404,7 +406,7 @@ export function SlideEditor({ slide }: SlideEditorProps) {
       {slides.length > 1 && (
         <Button variant="danger" size="sm" onClick={() => removeSlide(slide.id)} className="w-full justify-center mt-1">
           <Trash2 className="w-3.5 h-3.5" />
-          Remove Slide
+          {t('Remove Slide')}
         </Button>
       )}
     </div>

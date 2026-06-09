@@ -1,6 +1,7 @@
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import * as htmlToImage from 'html-to-image';
 import JSZip from 'jszip';
 import { useProjectStore } from '../store/useProjectStore';
@@ -143,6 +144,7 @@ async function renderAndCapture(
 }
 
 export function useExport() {
+  const { t } = useTranslation();
   const { slides, meta, theme, selectedResolutions } = useProjectStore();
 
   async function exportSlide(slideId: string): Promise<void> {
@@ -161,7 +163,7 @@ export function useExport() {
       console.log('[Export] Saving:', filename, `(${(blob.size / 1024).toFixed(0)} KB)`);
       await downloadFile(blob, filename);
     } else {
-      alert('Export failed — capture returned empty. Check console for details.');
+      alert(t('Export failed — capture returned empty. Check console for details.'));
     }
   }
 
@@ -196,7 +198,7 @@ export function useExport() {
       const zipBlob = await zip.generateAsync({ type: 'blob' });
       await downloadFile(zipBlob, `${appSlug}-screenshots.zip`);
     } else {
-      alert('No slides were captured.');
+      alert(t('No slides were captured.'));
     }
   }
 
